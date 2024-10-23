@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "target": "esnext", //the latest version of JS
+        //"watch": true //recompiles the JS file every time the TS file is saved
+        
+    }
+}

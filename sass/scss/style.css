@@ -1,0 +1,153 @@
+/*SASS PARTIALS*/
+/*SASS PARTIALS*/
+/*This file contains all the partials for this folder that will be exported to "style.scss"*/
+/*SASS variables are marked as "$"*/
+/*SASS MIXINS AND BUILT-IN MODULES
+700px breakpoint for mobile devices (43.75em) 
+900px for tablets (56.25em)
+1440px for desktop devices (90em)
+SASS map built-in module can save data in "key: value" pairs
+similar to an object.
+*/
+/*Better not to use pixels for @media queries since it won't scale up/down when
+the default font size is changed within a browser by users!*/
+/*Path from this folder to the folder with fonts
+@use '../util' as *; with this you're able not to specify the folder name of the variable
+*/
+body {
+  font-family: "Open Sans", sans-serif; /*The name of the folder used with the variable (so, you can use the same variable name in other folders)*/
+  background-color: var(--background-color);
+  color: var(--color);
+  margin: 0;
+  padding: 0;
+  /*display: grid; or "flex" 
+  justify-content: center; if we don't use margin-inline (reference to _grid.scss)*/
+}
+
+/*SASS PARTIALS*/
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit; /*Inherits the same value for this property from the <html>*/
+}
+
+/*Forwarding these files to the overall "style.scss"*/
+/*SASS PARTIALS*/
+h1, h2, h3 {
+  font-weight: 700;
+  line-height: 1.1;
+  margin-top: 0;
+}
+
+p {
+  margin-top: 0;
+  font-size: 1rem;
+}
+
+a, a:visited, a:active {
+  text-decoration: none;
+}
+
+h1 {
+  /*
+  @include util.breakpoint(medium) {
+      font-size: 36px;
+  }
+  @include util.breakpoint(large) {
+      font-size: 42px;
+  }*/
+  font-size: clamp(1.75rem, 1rem + 2vw, 2.5rem);
+}
+
+h2 {
+  font-size: clamp(1.375rem, 0.875rem + 1.5vw, 2.25rem);
+}
+
+/*For pixels: your elements won't be affected (if you change the default font size in a browser,
+because pixels are absolute values. That's why you must avoid using them!*/
+/*You can specify the name this way, if you called it with "_"*/
+/*Specify @forward in the file where we import these files above. Check out "style.scss"*/
+/*VARIABLES*/
+/*VARIABLES*/
+:root { /*overwrites the values of the same variable names*/
+  --background-color: hsl(222, 96%, 80%); /*Names of CSS custom properties start with "--"*/
+  --color: hsl(0, 0%, 100%);
+}
+
+/*Specify the folder name with those partials to import them here*/
+/*%widget { //placeholder
+    padding: util.rem(16); //gets rid of margin collapses
+}*/
+.grid { /*grid in this case is the block (of BEM) (reference to the <div> class name)*/
+  display: grid;
+  grid-template-columns: 1fr; /*1 fractional unit (column)*/
+  gap: 2.5rem;
+  grid-template-rows: auto auto; /*will be sized based on how much content the grid child item contains*/
+  width: min(100% - 2.5rem, 62.5rem);
+  margin-inline: auto;
+  padding: 0 1.25rem;
+  /*@media (min-width: 900px) {/*In pure CSS "@media" is used outside of this scope and inside again
+      //The @media query overwrites the properties mentioned earlier
+      grid-template-columns: 2fr 1fr; //The 1st column is 2 times wider than the 2nd
+      grid-template-rows: auto; //Only 1 row now
+  }*/
+}
+.grid__main, .grid__sidebar {
+  padding: 2.5rem;
+}
+.grid__main { /*"&" refers to the parent (grid) and (main) is nested now */
+  background-color: hsl(240, 87%, 35%);
+}
+@media (min-width: 56.25em) {
+  .grid__main {
+    background-color: hsl(40, 74%, 43%);
+  }
+}
+@media (min-width: 43.75em) {
+  .grid__main {
+    background-color: hsl(120, 89%, 17%);
+  }
+}
+@media (min-width: 56.25em) {
+  .grid__main {
+    background-color: hsl(0, 81%, 26%);
+  }
+}
+.grid__sidebar { /*element (of BEM) as well as "__main" for the parent <div>*/
+  /*@include util.breakpoint(large) {
+      text-align: left; //on the left when translates into the large size and above
+  }*/
+  /*@media (max-width: 56.25em) {
+      text-align: center; //centered for mobile devices and tablets by default
+  }*/
+}
+@media (max-width: 56.24875em) {
+  .grid__sidebar {
+    text-align: center;
+  }
+}
+@media (max-width: 43.74875em) {
+  .grid__sidebar {
+    text-align: right;
+  }
+}
+@media (min-width: 56.25em) {
+  .grid {
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+  }
+}
+.grid__widget {
+  padding: 1rem;
+  /*For helper/utility classes: you can add them in HTML anywhere you want.
+  Thefore, those properties will be applied to them too (reusable)*/
+}
+.grid__widget.green {
+  background-color: hsl(120, 94%, 20%);
+}
+.grid__widget.magenta {
+  background-color: hsl(300, 92%, 26%);
+}/*# sourceMappingURL=style.css.map */

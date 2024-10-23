@@ -1,0 +1,86 @@
+@use '../util'; //we need to load the breakpoint mixin from "util" folder
+/*%widget { //placeholder
+    padding: util.rem(16); //gets rid of margin collapses
+}*/
+.grid { /*grid in this case is the block (of BEM) (reference to the <div> class name)*/
+    display: grid;
+    grid-template-columns: 1fr; /*1 fractional unit (column)*/
+    //gap: 40px; /*40px between all cells in the grid*/
+    gap: util.rem(40);
+    grid-template-rows: auto auto; /*will be sized based on how much content the grid child item contains*/
+    //max-width: 1000px;
+    //width: min(100% - 40px, 1000px); 
+    width: min(100% - util.rem(40), util.rem(1000)); 
+    //sets the min out of 2 values. If the width is 800px, (100% = 800px) will be used. If the width is 1400px (1000px is used)/ "-40" is for the left and right sides
+    //margin: 0 auto;
+    margin-inline: auto; //will set "auto" to the left and right
+    //"margin-inline" is a short way of "margin-inline-start" and "margin-inline-end"*/
+    //padding: 0 20px;
+    padding: 0 util.rem(20);
+    &__main, &__sidebar {
+        //padding: 40px;
+        padding: util.rem(40);
+    }
+    &__main { /*"&" refers to the parent (grid) and (main) is nested now */
+        background-color: hsl(240, 87%, 35%); //default for mobile devices
+        //Order of @media queries matter due to the cascade!
+        //The cascading part of CSS means that in the rules of the same level
+        //of specificity the latest rule will overwrite the rules before it
+        @include util.breakpoint(large) { //is overwritten by medium below
+            background-color: hsl(40, 74%, 43%);
+        }
+        @include util.breakpoint(medium) {
+            background-color: hsl(120, 89%, 17%);
+        }
+        @include util.breakpoint(large) {
+            background-color: hsl(0, 81%, 26%);
+        }
+    }
+    &__sidebar { /*element (of BEM) as well as "__main" for the parent <div>*/
+        /*@include util.breakpoint(large) {
+            text-align: left; //on the left when translates into the large size and above
+        }*/
+        /*@media (max-width: 56.25em) {
+            text-align: center; //centered for mobile devices and tablets by default
+        }*/
+        @include util.breakpoint-down(medium) { //for medium and down
+            text-align: center;
+        }
+        @include util.breakpoint-down(small) { //for small and down
+            text-align: right;
+        }
+    } 
+    
+    /*@media (min-width: 900px) {/*In pure CSS "@media" is used outside of this scope and inside again
+        //The @media query overwrites the properties mentioned earlier
+        grid-template-columns: 2fr 1fr; //The 1st column is 2 times wider than the 2nd
+        grid-template-rows: auto; //Only 1 row now
+    }*/
+    @include util.breakpoint(large) { //loading the "breakpoint" mixin
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: auto;
+    }
+    //In pure CSS @media can't be nested within a selector, but in SASS we can
+
+    //font-size: 2rem; //check out child elements with "em" values now (based on a patent)
+    //font-size: 2em; //depends on a parent <body> font size
+    &__widget {
+        padding: util.rem(16); //gets rid of margin collapses
+        //$widget: &; //a "widget" variable that's set to the "&" (parent element), which is "&__widget"
+        /*&.green { //modifier (of BEM)
+            //@extend .grid__widget; //uses all the styles of "grid__widget" class (equal line below)
+            //way to load the value of SASS variables in SASS selector name (called an interpolation):
+            //@extend #{$widget}; //interpolation
+            //but it's easier to use the 1st option:
+            //@extend .grid__widget; //use @extend for closer related elements
+            //@extend %widget; //using the placeholder from the top (optional)
+            background-color: hsl(120, 94%, 20%);
+        }
+        &.magenta { //"&." makes it a helper/utility class
+            //@extend %widget;
+            background-color: hsl(300, 92%, 26%);
+        } Moved to "_colours.scss"*/
+        /*For helper/utility classes: you can add them in HTML anywhere you want.
+        Thefore, those properties will be applied to them too (reusable)*/
+    }
+}
