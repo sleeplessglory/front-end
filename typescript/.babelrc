@@ -1,0 +1,7 @@
+{
+    "presets": [
+        ["@babel/preset-env"], //transpile modern JavaScript
+        ["@babel/preset-react", { "runtime": "automatic" }], //handle JSX and TSX syntax
+        ["@babel/preset-typescript"] //handle TypeScript syntax
+    ]
+}

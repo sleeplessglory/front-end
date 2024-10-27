@@ -10,22 +10,24 @@ __________________________________
 React type of app with Webpack bundler (not Vite):
 npm init -y for a default set-up
 npm install react react-dom
-npm install @types/react @types/react-dom --save-dev
+npm install typescript @types/react @types/react-dom --save-dev
+npx tsc --init
 npm install webpack webpack-cli webpack-dev-server --save-dev
-npm install @babel/core @babel/preset-react @babel/preset-env babel-loader --save-dev
+npm install @babel/core @babel/preset-react @babel/preset-env @babel/preset-typescript babel-loader --save-dev
 npm install html-webpack-plugin --save-dev
 npm install sass-loader sass css-loader mini-css-extract-plugin --save-dev
-create "src/index.jsx" with the lines:
+create "src/index.tsx" with the lines:
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './components/App.jsx';
+import ReactDOM from 'react-dom/client';
 import './sass/style.scss';
+import App from './components/App';
 
-createRoot(document.getElementById('root')).render(
-    <StrictMode>
-      <App />
-    </StrictMode>,
-)
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
 
 create file "src/index.html" with <div id="root"></div> in the <body>
 create "webpack.config.js" file in the root of a project with following:
@@ -33,20 +35,20 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-export default {
-    entry: './src/index.jsx',
+const config = {
+    entry: './src/index.tsx',
     output: {
         path: path.resolve('dist'),
         filename: 'bundle.js',
         clean: true //Clean the directory before each build
     },
     resolve: {
-        extensions: ['.js', '.jsx'], //Automatically resolve extensions
+        extensions: ['.ts', '.tsx', '.js', '.jsx'], //Automatically resolve extensions
     },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/, //Match JS and JSX files
+                test: /\.(ts|tsx|js|jsx)$/, //Match JS and JSX files
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader', //For JavaScript and JSX files
@@ -89,6 +91,7 @@ export default {
     },
     mode: 'development',
 };
+export default config;
 
 create "public" folder in the root with index.html and its favicon
 create ".babelrc" in the root with lines:

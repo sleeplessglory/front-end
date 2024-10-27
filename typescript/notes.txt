@@ -1,0 +1,5 @@
+To add TypeScript in a React project:
+npm install typescript @types/react @types/react-dom --save-dev
+npx tsc --init (generates the boilerplate tsconfig.json file)
+Make sure the config file has: "jsx": "react-jsx"
+While importing .ts or .tsx files, don't specify their extensions
