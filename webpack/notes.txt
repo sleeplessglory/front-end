@@ -11,16 +11,28 @@ React type of app with Webpack bundler (not Vite):
 npm init -y for a default set-up
 npm install react react-dom
 npm install typescript @types/react @types/react-dom --save-dev
-npx tsc --init
+npx tsc --init or in tsconfig.json:
+{
+    "compilerOptions": {
+        "target": "es6",
+        "jsx": "react-jsx",
+        "module": "CommonJS",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipLibCheck": true
+    },
+    "include": ["src"]
+}
 npm install webpack webpack-cli webpack-dev-server --save-dev
 npm install @babel/core @babel/preset-react @babel/preset-env @babel/preset-typescript babel-loader --save-dev
 npm install html-webpack-plugin --save-dev
 npm install sass-loader sass css-loader mini-css-extract-plugin --save-dev
 create "src/index.tsx" with the lines:
-import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import './sass/style.scss';
+import { StrictMode } from 'react';
 import App from './components/App';
+import './scss/style.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -99,6 +111,7 @@ create ".babelrc" in the root with lines:
     "presets": [
         ["@babel/preset-env"],
         ["@babel/preset-react", { "runtime": "automatic" }] //ensures that "React" is used automatically without importing it to index.jsx
+    	["@babel/preset-typescript"]
     ]
 }
 

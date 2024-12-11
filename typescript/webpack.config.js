@@ -2,7 +2,7 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-const config = {
+export const config = {
     entry: './src/index.tsx',
     output: {
         path: path.resolve('dist'),
@@ -58,4 +58,3 @@ const config = {
     },
     mode: 'development',
 };
-export default config;
